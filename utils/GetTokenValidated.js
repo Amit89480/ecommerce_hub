@@ -18,7 +18,7 @@ module.exports = {
     try {
       let reqObj = {
         userId: userObj?._id,
-        email: userObj.email,
+        email: userObj?.email,
         ...userObj,
       };
       req.user = reqObj;

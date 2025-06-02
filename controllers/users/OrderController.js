@@ -51,6 +51,13 @@ module.exports = {
       }
       let cartDetails = await Cart.findById(cartId).select("inventories");
 
+      if (UtilController.isEmpty(cartDetails)) {
+        UtilController.sendError(req, res, next, {
+          message: "something went wrong",
+        });
+        return;
+      }
+
       let totalAmount = 0;
       const detailedInventory = [];
       for (const item of cartDetails?.inventories) {
