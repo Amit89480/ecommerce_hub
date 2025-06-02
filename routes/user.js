@@ -22,5 +22,6 @@ router.route("/delete/cart/item").post(CartController.deleteCartItems);
 
 //orders api
 router.route("/initiate/order").post(OrderController.createOrder);
+router.route("/view/order/details").post(OrderController.viewOrderById);
 
 module.exports = router;
