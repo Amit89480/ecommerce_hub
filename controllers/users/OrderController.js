@@ -5,12 +5,10 @@ const Inventory = require("../../models/Inventory");
 const PaymentHistory = require("../../models/PaymentHistory");
 const responseCode = require("../../config/responsecode");
 const UtilController = require("../../utils/UtilController");
+const { sendOrderConfirmationEmail } = require("../../utils/SendEmail");
 
 module.exports = {
   createOrder: async (req, res, next) => {
-    // const session = await mongoose.startSession();
-    // session.startTransaction();
-
     try {
       const {
         cartId,
@@ -64,6 +62,11 @@ module.exports = {
         const inv = await Inventory.findById(item?.inventoryId);
 
         if (!inv || inv.stock < item.quantity) {
+          await sendOrderDeclinedEmail({
+            to: email,
+            fullName,
+            failedItemId: item.inventoryId,
+          });
           throw {
             message: `Inventory item ${item?.inventoryId} not available or out of stock.`,
             code: responseCode.notFound,
@@ -101,8 +104,19 @@ module.exports = {
         expiryDate,
         cvv,
       };
-      const createdOrder = await Order.create(createObj);
-
+      let createdOrder = await Order.create(createObj);
+      await sendOrderConfirmationEmail({
+        to: email,
+        fullName,
+        orderId,
+        totalAmount,
+        paymentMethod,
+        detailedInventory,
+        address,
+        city,
+        state,
+        zipCode,
+      });
       //below creating the payment logs
       let paymentLogsObj = {
         userId,
@@ -117,17 +131,11 @@ module.exports = {
       };
       await PaymentHistory.create(paymentLogsObj);
 
-      //   await session.commitTransaction();
-      //   session.endSession();
-
       return UtilController.sendSuccess(req, res, next, {
         message: "Order and payment recorded successfully",
         data: createdOrder,
       });
     } catch (error) {
-      //   await session.abortTransaction();
-      //   session.endSession();
-
       return UtilController.sendError(req, res, next, {
         message: error.message || "Something went wrong",
       });
