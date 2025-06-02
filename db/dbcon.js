@@ -8,8 +8,6 @@ const connectDB = async () => {
       return dbConn;
     }
     mongoose.connect(dbUrl, {
-      // useNewUrlParser: true,
-      // useUnifiedTopology: true,
       maxPoolSize: 5,
     });
 
