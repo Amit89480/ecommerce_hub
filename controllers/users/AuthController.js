@@ -1,8 +1,9 @@
+require("dotenv").config();
 const User = require("../../models/user");
 const jwt = require("jsonwebtoken");
 const UtilController = require("../../utils/UtilController");
 const bcryptjs = require("bcryptjs");
-let secret = "ecommerce123";
+let secret = process.env.SECRETKEY;
 
 module.exports = {
   accountLogin: async (req, res, next) => {

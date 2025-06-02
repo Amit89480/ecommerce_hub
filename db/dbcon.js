@@ -1,6 +1,7 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 let dbConn = null;
-let dbUrl = "mongodb://localhost:27017/ecommerce";
+let dbUrl = process.env.DBURL;
 const connectDB = async () => {
   try {
     if (dbConn) {
@@ -13,7 +14,7 @@ const connectDB = async () => {
     });
 
     dbConn = mongoose.connection;
-    console.log("DB Connected")
+    console.log("DB Connected");
 
     return dbConn;
   } catch (error) {

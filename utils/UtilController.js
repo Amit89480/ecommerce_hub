@@ -15,7 +15,7 @@ module.exports = {
     // console.error(err);
     res.status(500).send({
       message: "failure",
-      code: responsecode.internalServerError,
+      code: responseCode.internalServerError,
       data: err,
     });
   },
