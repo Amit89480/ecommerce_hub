@@ -51,7 +51,7 @@ module.exports = {
 
       if (UtilController.isEmpty(cartDetails)) {
         UtilController.sendError(req, res, next, {
-          message: "something went wrong",
+          message: "Cart not found",
         });
         return;
       }
@@ -74,10 +74,11 @@ module.exports = {
         }
 
         totalAmount += inv?.price * item?.quantity;
-
         detailedInventory.push({
           inventory: inv?._id,
           quantity: item?.quantity,
+          variant: item?.variant,
+          color: item?.color,
         });
 
         inv.stock -= item?.quantity;
@@ -136,6 +137,7 @@ module.exports = {
         result: createdOrder,
       });
     } catch (error) {
+     console.log(error.message)
       return UtilController.sendError(req, res, next, {
         message: error.message || "Something went wrong",
       });
