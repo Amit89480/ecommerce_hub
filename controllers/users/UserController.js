@@ -14,7 +14,7 @@ module.exports = {
       if (!UtilController.isEmpty(user)) {
         UtilController.sendError(req, res, next, {
           message: "user already exists",
-          responseCode:responsecode.badRequest
+          responseCode: responsecode.badRequest,
         });
         return;
       }
@@ -67,12 +67,14 @@ module.exports = {
       if (!userData.length) {
         return UtilController.sendError(req, res, next, {
           message: "User not found",
+          responseCode:responsecode.recordNotFound
         });
       }
 
       UtilController.sendSuccess(req, res, next, {
         message: "User found",
         result: userData[0],
+        responseCode: responsecode.validSession,
       });
     } catch (error) {
       console.error(error);
