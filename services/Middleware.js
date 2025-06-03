@@ -49,7 +49,7 @@ module.exports = {
           {
             responseCode: responseCode.invalidSession,
             result: {
-              message: "You are not authorized to access this route",
+              message: "Please login to access this route",
             },
           },
           responseCode.unAuthorized
