@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require("path");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -25,11 +26,9 @@ app.use("/", Middleware.checkRequestForAuthToken);
 app.use("/admin", admin);
 app.use("/user", user);
 
-app.use((req, res, next) => {
-  return res.status(404).json({
-    error: "Not Found",
-  });
-});
+app.use(express.static(path.join(__dirname, "build")));
+app.use("/app", express.static(path.join(__dirname, "build")));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.listen(PORT, () => {
   console.log(`server listening on port ${PORT}`);
