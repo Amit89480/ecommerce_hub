@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.route("/signup").post(UserController.signUpUser);
 router.route("/profile/details").get(UserController.getUserDetails);
-router.route("/logout").post(AuthController.logout);
+router.route("/logout").get(AuthController.logout);
 router.route("/login").post(AuthController.accountLogin);
 
 //inventory apis

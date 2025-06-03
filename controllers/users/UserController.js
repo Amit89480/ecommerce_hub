@@ -9,7 +9,7 @@ module.exports = {
       const user = await User.findOne({ email: createObj?.email });
       let { password } = createObj;
 
-      if (user) {
+      if (!UtilController.isEmpty(user)) {
         return res
           .status(400)
           .json({ error: "User already exists" }, { status: 400 });
@@ -33,7 +33,7 @@ module.exports = {
   },
   getUserDetails: async (req, res, next) => {
     try {
-      const userId = getDataFromToken(req);
+      const userId = req.user?.userId;
       const user = await User.findById(userId).select("-password");
       UtilController.sendSuccess(req, res, next, {
         message: "user found",
