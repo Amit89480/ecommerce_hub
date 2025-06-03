@@ -39,11 +39,13 @@ module.exports = {
       res.cookie("token", token, {
         httpOnly: true,
         secure: true,
+        sameSite: "None",
+        maxAge: 24 * 60 * 60 * 1000,
       });
 
       UtilController.sendSuccess(req, res, next, {
         message: "User logged in successfully",
-        responseCode:responsecode.validSession
+        responseCode: responsecode.validSession,
       });
     } catch (error) {
       UtilController.sendError(req, res, next, {
