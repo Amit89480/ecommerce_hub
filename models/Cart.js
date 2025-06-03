@@ -12,6 +12,14 @@ const cartSchema = new mongoose.Schema(
           type: Number,
           default: 1,
         },
+        variant: {
+          type: String,
+          default: "",
+        },
+        color: {
+          type: String,
+          default: "",
+        },
       },
     ],
     userId: {

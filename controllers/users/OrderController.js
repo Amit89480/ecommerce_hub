@@ -22,7 +22,7 @@ module.exports = {
         cardNumber,
         expiryDate,
         cvv,
-        paymentMethod="card",
+        paymentMethod = "card",
         paymentGateway = "upi",
       } = req.body;
 
@@ -41,10 +41,11 @@ module.exports = {
         cvv,
       ];
       if (requiredFields.includes(undefined) || requiredFields.includes("")) {
-        throw {
+        UtilController.sendSuccess(req, res, next, {
           message: "All fields are required.",
           code: responseCode.badRequest,
-        };
+        });
+        return;
       }
       let cartDetails = await Cart.findById(cartId).select("inventories");
 
@@ -153,7 +154,7 @@ module.exports = {
       const pipeline = [
         {
           $match: {
-            _id: new mongoose.Types.ObjectId(recordId),
+            orderId: recordId,
           },
         },
         {
@@ -172,9 +173,12 @@ module.exports = {
               {
                 $project: {
                   _id: 1,
-                  productName: 1,
+                  title: 1,
                   colors: 1,
                   sizes: 1,
+                  thunbnail: 1,
+                  price: 1,
+                  images: 1,
                 },
               },
             ],
