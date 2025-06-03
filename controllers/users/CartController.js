@@ -5,7 +5,6 @@ const { default: mongoose } = require("mongoose");
 module.exports = {
   getCartItemsTotal: (data) => {
     let total = 0;
-    console.log(data);
     data.forEach((cart) => {
       cart.inventories.forEach(({ inventoryId, quantity }) => {
         const price = inventoryId.price || 0;
