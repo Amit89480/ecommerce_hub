@@ -14,6 +14,7 @@ module.exports = {
       if (!UtilController.isEmpty(user)) {
         UtilController.sendError(req, res, next, {
           message: "user already exists",
+          responseCode:responsecode.badRequest
         });
         return;
       }

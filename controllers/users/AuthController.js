@@ -3,6 +3,7 @@ const User = require("../../models/user");
 const jwt = require("jsonwebtoken");
 const UtilController = require("../../utils/UtilController");
 const bcryptjs = require("bcryptjs");
+const responsecode = require("../../config/responsecode");
 let secret = process.env.SECRETKEY;
 
 module.exports = {
@@ -11,16 +12,20 @@ module.exports = {
       const { email, password } = req.body;
       const user = await User.findOne({ email });
       if (!user) {
-        return res
-          .status(400)
-          .json({ error: "User does not exist" }, { status: 400 });
+        UtilController.sendSuccess(req, res, next, {
+          responseCode: responsecode.recordNotFound,
+          message: "User not found",
+        });
+        return;
       }
 
       const validPassword = await bcryptjs.compare(password, user.password);
       if (!validPassword) {
-        return res
-          .status(400)
-          .json({ error: "Invalid password" }, { status: 400 });
+        UtilController.sendSuccess(req, res, next, {
+          responseCode: responsecode.incorrectPassword,
+          message: "Invalid credentails",
+        });
+        return;
       }
       const tokenData = {
         id: user._id,
@@ -38,6 +43,7 @@ module.exports = {
 
       UtilController.sendSuccess(req, res, next, {
         message: "User logged in successfully",
+        responseCode:responsecode.validSession
       });
     } catch (error) {
       UtilController.sendError(req, res, next, {

@@ -1,0 +1,1 @@
+import{j as t,v as e,T as n}from"./index-C5dV5vcY.js";function r(){return t.jsx(e,{display:"flex",justifyContent:"center",alignItems:"center",minHeight:"60vh",textAlign:"center",children:t.jsx(n,{variant:"h4",fontWeight:"bold",color:"error",children:"404 - Page Not Found"})})}export{r as default};
