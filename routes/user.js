@@ -19,6 +19,7 @@ router.route("/product/details").post(InventoryController.prductDetailsById);
 router.route("/add/item").post(CartController.addToCart);
 router.route("/list/cart/items").post(CartController.listAllCartItems);
 router.route("/delete/cart/item").post(CartController.deleteCartItems);
+router.route("/clear/cart").get(CartController.clearCart);
 
 //orders api
 router.route("/initiate/order").post(OrderController.createOrder);

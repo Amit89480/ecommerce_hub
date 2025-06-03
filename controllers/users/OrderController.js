@@ -14,7 +14,7 @@ module.exports = {
         cartId,
         fullName,
         email,
-        phoneNumber,
+        phone,
         address,
         city,
         state,
@@ -22,7 +22,7 @@ module.exports = {
         cardNumber,
         expiryDate,
         cvv,
-        paymentMethod,
+        paymentMethod="card",
         paymentGateway = "upi",
       } = req.body;
 
@@ -31,7 +31,7 @@ module.exports = {
         cartId,
         fullName,
         email,
-        phoneNumber,
+        phone,
         address,
         city,
         state,
@@ -39,7 +39,6 @@ module.exports = {
         cardNumber,
         expiryDate,
         cvv,
-        paymentMethod,
       ];
       if (requiredFields.includes(undefined) || requiredFields.includes("")) {
         throw {
@@ -95,7 +94,7 @@ module.exports = {
         userId,
         fullName,
         email,
-        phoneNumber,
+        phone,
         address,
         city,
         state,
@@ -133,7 +132,7 @@ module.exports = {
 
       return UtilController.sendSuccess(req, res, next, {
         message: "Order and payment recorded successfully",
-        data: createdOrder,
+        result: createdOrder,
       });
     } catch (error) {
       return UtilController.sendError(req, res, next, {

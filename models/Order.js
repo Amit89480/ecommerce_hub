@@ -36,7 +36,7 @@ const orderSchema = new mongoose.Schema(
       required: true,
       match: [/^\S+@\S+\.\S+$/, "Invalid email format"],
     },
-    phoneNumber: {
+    phone: {
       type: String,
       required: true,
       match: [/^\d{10}$/, "Phone number must be 10 digits"],
@@ -67,12 +67,12 @@ const orderSchema = new mongoose.Schema(
     expiryDate: {
       type: Date,
       required: true,
-      validate: {
-        validator: function (v) {
-          return v > new Date();
-        },
-        message: "Expiry date must be in the future",
-      },
+      // validate: {
+      //   validator: function (v) {
+      //     return v > new Date();
+      //   },
+      //   message: "Expiry date must be in the future",
+      // },
     },
     cvv: {
       type: String,
